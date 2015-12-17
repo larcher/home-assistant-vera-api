@@ -77,6 +77,8 @@ class VeraController(object):
                     self.devices.append(armable)
             elif item.get('deviceInfo') and item.get('deviceInfo').get('categoryName') == 'Light Sensor':
                 self.devices.append(VeraSensor(item, self))
+            elif item.get('deviceInfo') and item.get('deviceInfo').get('categoryName') == 'Dimmable Light':
+                self.devices.append(VeraDimmer(item, self))
             else:
                 self.devices.append(VeraDevice(item, self))
 
@@ -223,7 +225,7 @@ class VeraDevice(object):
 
     @property
     def is_dimmable(self):
-        return self.category == "Dimmable Switch"
+        return self.category in ["Dimmable Switch", "Dimmable Light"]
 
     @property
     def is_trippable(self):
