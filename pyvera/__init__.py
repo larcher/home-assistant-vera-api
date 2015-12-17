@@ -78,7 +78,7 @@ class VeraController(object):
             elif item.get('deviceInfo') and item.get('deviceInfo').get('categoryName') == 'Light Sensor':
                 self.devices.append(VeraSensor(item, self))
             elif item.get('deviceInfo') and item.get('deviceInfo').get('categoryName') == 'Dimmable Light':
-                self.devices.append(VeraDimmer(item, self))
+                self.devices.append(VeraDimmerLight(item, self))
             else:
                 self.devices.append(VeraDevice(item, self))
 
@@ -305,6 +305,10 @@ class VeraDimmer(VeraSwitch):
         self.brightness = brightness
         self.set_value('LoadLevelTarget', percent)
 
+class VeraDimmerLight(VeraDimmer):
+
+    def switch_off(self):
+        self.set_brightness(0)
 
 class VeraArmableDevice(VeraSwitch):
 
